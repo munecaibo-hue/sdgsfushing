@@ -75,7 +75,7 @@ function App() {
       t.team === teamName ? { ...t, score: (t.score || 0) + increment } : t
     ));
 
-    const url = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL;
+    const url = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL || DEFAULT_URL;
     if (url) {
       fetch(url, {
         method: 'POST',
@@ -102,7 +102,7 @@ function App() {
     setUpdateLock(true);
     
     try {
-      const url = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL;
+      const url = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL || DEFAULT_URL;
       setScores(prev => prev.map(t => ({ ...t, score: 0 })));
       if (url) {
         await fetch(url, {
