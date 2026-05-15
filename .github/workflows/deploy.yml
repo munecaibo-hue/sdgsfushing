@@ -23,16 +23,14 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Fix Permissions
-        run: chmod +x node_modules/.bin/vite
+      - name: Clean and Install
+        run: |
+          rm -rf node_modules
+          npm install
 
       - name: Build
-        run: npx vite build --base=/sdgsfushing/
+        run: ./node_modules/.bin/vite build --base=/sdgsfushing/
         env:
-          # 從 GitHub Secrets 中讀取環境變數
           VITE_GOOGLE_APP_SCRIPT_URL: ${{ secrets.VITE_GOOGLE_APP_SCRIPT_URL }}
 
       - name: Upload Artifacts
