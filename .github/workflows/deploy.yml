@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: npm run build -- --base=/sdgsfushing/
         env:
           # 從 GitHub Secrets 中讀取環境變數
           VITE_GOOGLE_APP_SCRIPT_URL: ${{ secrets.VITE_GOOGLE_APP_SCRIPT_URL }}
