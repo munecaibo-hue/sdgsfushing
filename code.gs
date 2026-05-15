@@ -11,10 +11,11 @@
  */
 
 function doGet(e) {
-  // 強制同步所有待處理的變更，確保讀取到最新數據
+  // 強制同步
   SpreadsheetApp.flush();
   
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheets()[0]; // 永遠抓取第一張工作表，避免分頁切換問題
   const data = sheet.getDataRange().getValues();
   const result = [];
   

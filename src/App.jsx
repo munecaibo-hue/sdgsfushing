@@ -43,12 +43,13 @@ function App() {
         }
         return;
       }
-      // 強迫瀏覽器與伺服器完全跳過快取，解決設備同步延遲
-      const response = await fetch(`${url}?t=${Date.now()}_${Math.random()}`, {
+      // 使用「深度隨機」參數與 Headers 繞過 Google 的邊緣快取
+      const response = await fetch(`${url}?t=${Date.now()}&r=${Math.random()}`, {
         cache: 'no-store',
         headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         }
       });
       const data = await response.json();
@@ -144,9 +145,18 @@ function App() {
             style={{ height: '1.4em', width: 'auto' }}
             className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] md:mr-6 mb-4 md:mb-0" 
           />
-          <span className="whitespace-nowrap">復興實中 新加坡交流</span>
+          <span className="whitespace-nowrap">復興實中 新加坡交流 <small className="text-xs opacity-30">v1.2</small></span>
         </h1>
       </header>
+      
+      {/* 懸浮同步按鈕 */}
+      <button 
+        onClick={() => fetchScores(true)}
+        className="fixed bottom-20 right-6 z-50 bg-yellow-500 text-black p-3 rounded-full shadow-lg border-2 border-black hover:scale-110 active:scale-95 transition-all flex items-center gap-2 font-bold"
+      >
+        <RotateCcw size={16} className={loading ? 'animate-spin' : ''} />
+        {loading ? '同步中...' : '立即同步'}
+      </button>
 
       {/* Content */}
       <main className="spacer-top z-10 flex-grow w-full max-w-4xl">
