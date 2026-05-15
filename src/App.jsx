@@ -130,7 +130,7 @@ function App() {
             style={{ height: '1.4em', width: 'auto' }}
             className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] md:mr-6 mb-4 md:mb-0" 
           />
-          <span className="whitespace-nowrap">復興實中 新加坡交流 <small className="text-xs opacity-30">v1.2.2</small></span>
+          <span className="whitespace-nowrap">復興實中 新加坡交流 <small className="text-xs opacity-30">v1.2.3</small></span>
         </h1>
       </header>
       
