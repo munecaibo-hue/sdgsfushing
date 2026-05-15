@@ -129,7 +129,7 @@ function App() {
       <header className="fixed-header">
         <h1 className="title-container text-6xl md:text-9xl text-white font-black tracking-tighter uppercase leading-none">
           <img 
-            src="/logo.png.png" 
+            src="logo.png.png" 
             alt="Logo" 
             style={{ height: '1.4em', width: 'auto' }}
             className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
