@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // 確保在 GitHub Pages 上路徑正確
+  base: '/sdgsfushing/', // 依照你的倉庫名稱設定明確路徑
 })
