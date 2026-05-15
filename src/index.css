@@ -265,3 +265,64 @@ h1, h2, h3 {
   border-radius: 50%;
 }
 
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.comic-sync-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  z-index: 9999;
+  background: var(--comic-yellow);
+  color: var(--comic-black);
+  border: 3px solid var(--comic-black);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: 'Bangers', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 6px 6px 0px var(--comic-black);
+  cursor: pointer;
+  transition: all 0.1s;
+  text-transform: uppercase;
+}
+
+.comic-sync-btn:hover {
+  transform: scale(1.05) translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--comic-black);
+}
+
+.comic-sync-btn:active {
+  transform: scale(0.95) translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--comic-black);
+}
+
+.comic-sync-btn.loading {
+  background: #666;
+  opacity: 0.8;
+  cursor: wait;
+}
+
+/* 修正標題區域在沒有 Tailwind 時的置中 */
+.fixed-header {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .comic-sync-btn {
+    bottom: 20px;
+    right: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}

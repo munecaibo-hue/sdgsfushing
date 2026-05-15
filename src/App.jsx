@@ -8,7 +8,8 @@ const CLASSES = [
   { id: 'he', name: '和班', teams: 9, password: '0001' },
   { id: 'ping', name: '平班', teams: 8, password: '0002' }
 ];
-const RESET_PASSWORD = '0508';
+// 備用 API 網址 (當 GitHub Secrets 沒設好時使用)
+const DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbwYZxjKwm6YK4G0auFUtoQ6i0z22GA0touzv7JbGfTg5YXG5JF9QD9xH45B45sAt0z0/exec';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('scoreboard');
@@ -18,9 +19,8 @@ function App() {
   const [showResetModal, setShowResetModal] = useState(false);
   const [resetPwd, setResetPwd] = useState('');
   
-  // 使用 Ref 確保在所有異步回呼中都能抓到最新的鎖定狀態，防止閉包陷阱
   const isUpdatingRef = useRef(false);
-  const [isUpdatingState, setIsUpdatingState] = useState(false); // 僅用於 UI 顯示
+  const [isUpdatingState, setIsUpdatingState] = useState(false);
 
   const setUpdateLock = (val) => {
     isUpdatingRef.current = val;
@@ -28,22 +28,12 @@ function App() {
   };
 
   const fetchScores = async (force = false) => {
-    // 如果正在上傳，且不是強制要求，則絕對不抓取，防止覆蓋
     if (isUpdatingRef.current && !force) return;
     
     setLoading(true);
     try {
-      const url = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL;
-      if (!url) {
-        if (scores.length === 0) {
-          const mock = [];
-          for (let i = 1; i <= 9; i++) mock.push({ team: `和班 第${i}小隊`, score: 0 });
-          for (let i = 1; i <= 8; i++) mock.push({ team: `平班 第${i}小隊`, score: 0 });
-          setScores(mock);
-        }
-        return;
-      }
-      // 使用「深度隨機」參數與 Headers 繞過 Google 的邊緣快取
+      const url = import.meta.env.VITE_GOOGLE_APP_SCRIPT_URL || DEFAULT_URL;
+      
       const response = await fetch(`${url}?t=${Date.now()}&r=${Math.random()}`, {
         cache: 'no-store',
         headers: {
@@ -58,7 +48,7 @@ function App() {
         setScores(data);
       }
     } catch (error) {
-      console.error('Fetch failed');
+      console.error('Fetch failed:', error);
     } finally {
       setLoading(false);
     }
@@ -152,10 +142,10 @@ function App() {
       {/* 懸浮同步按鈕 */}
       <button 
         onClick={() => fetchScores(true)}
-        className="fixed bottom-20 right-6 z-50 bg-yellow-500 text-black p-3 rounded-full shadow-lg border-2 border-black hover:scale-110 active:scale-95 transition-all flex items-center gap-2 font-bold"
+        className={`comic-sync-btn ${loading ? 'loading' : ''}`}
       >
-        <RotateCcw size={16} className={loading ? 'animate-spin' : ''} />
-        {loading ? '同步中...' : '立即同步'}
+        <RotateCcw size={20} className={loading ? 'animate-spin' : ''} />
+        <span>{loading ? '同步中...' : '同步分數'}</span>
       </button>
 
       {/* Content */}
