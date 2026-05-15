@@ -239,8 +239,8 @@ function ScoreboardView({ scores, loading }) {
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full text-center mb-12">
-        <h2 className="text-4xl md:text-7xl gold-text font-black flex items-center justify-center gap-4">
-          🏆 SDGs 機智問答優勝榜 🏆
+        <h2 className="text-4xl md:text-7xl gold-text font-black w-full text-center flex items-center justify-center gap-2 md:gap-4 px-2">
+          <span className="hidden md:inline">🏆</span> SDGs 機智問答優勝榜 <span className="hidden md:inline">🏆</span>
         </h2>
       </div>
 
