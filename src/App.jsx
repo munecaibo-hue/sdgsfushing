@@ -122,8 +122,8 @@ function App() {
       <div className="comic-halftone"></div>
 
       {/* Header - 修正置中佈局 */}
-      <header className="fixed-header w-full left-0 right-0 flex justify-center w-full left-0 right-0 flex justify-center">
-        <h1 className="title-container w-full max-w-6xl flex flex-col md:flex-row items-center justify-center text-center w-full max-w-6xl flex flex-col md:flex-row items-center justify-center text-center text-6xl md:text-9xl text-white font-black tracking-tighter uppercase leading-none px-4">
+      <header className="fixed-header w-full left-0 right-0 flex justify-center">
+        <h1 className="title-container w-full max-w-6xl flex flex-col md:flex-row items-center justify-center text-center text-6xl md:text-9xl text-white font-black tracking-tighter uppercase leading-none px-4">
           <img 
             src={logoImg} 
             alt="Logo" 
