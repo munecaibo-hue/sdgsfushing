@@ -11,6 +11,9 @@
  */
 
 function doGet(e) {
+  // 強制同步所有待處理的變更，確保讀取到最新數據
+  SpreadsheetApp.flush();
+  
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   const data = sheet.getDataRange().getValues();
   const result = [];
@@ -18,7 +21,7 @@ function doGet(e) {
   for (let i = 1; i < data.length; i++) {
     if (data[i][0]) {
       result.push({
-        team: data[i][0],
+        team: String(data[i][0]).trim(),
         score: Number(data[i][1]) || 0
       });
     }

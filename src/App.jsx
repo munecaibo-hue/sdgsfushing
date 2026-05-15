@@ -60,8 +60,9 @@ function App() {
   useEffect(() => {
     fetchScores();
     let interval;
-    if (currentPage === 'scoreboard') {
-      interval = setInterval(() => fetchScores(), 8000);
+    if (currentPage === 'scoreboard' || currentPage === 'gm') {
+      const ms = currentPage === 'scoreboard' ? 8000 : 10000;
+      interval = setInterval(() => fetchScores(), ms);
     }
     return () => {
       if (interval) clearInterval(interval);
@@ -87,10 +88,11 @@ function App() {
       }).catch(() => {});
     }
 
-    // 延長鎖定時間到 2 秒，確保 Google 那邊寫入穩定
-    setTimeout(() => {
+    // 3秒後強制刷新並解鎖，確保看到同步後的結果
+    setTimeout(async () => {
+      await fetchScores(true);
       setUpdateLock(false);
-    }, 2000);
+    }, 3000);
   };
 
   const executeReset = async () => {
