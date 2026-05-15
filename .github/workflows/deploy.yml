@@ -30,14 +30,16 @@ jobs:
           npm install
 
       - name: Build
-        run: node node_modules/vite/bin/vite.js build --base=/sdgsfushing/
+        run: |
+          chmod +x node_modules/.bin/vite
+          npm run build -- --base=/sdgsfushing/
         env:
           VITE_GOOGLE_APP_SCRIPT_URL: ${{ secrets.VITE_GOOGLE_APP_SCRIPT_URL }}
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: dist
 
   deploy:
     needs: build_site
