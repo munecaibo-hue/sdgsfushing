@@ -3,7 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 或是你使用的主要分支名稱
+      - main
+      - master
 
 permissions:
   contents: read
