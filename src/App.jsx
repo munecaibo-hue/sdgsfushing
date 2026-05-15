@@ -43,10 +43,16 @@ function App() {
         }
         return;
       }
-      const response = await fetch(`${url}?t=${Date.now()}`);
+      // 強迫瀏覽器與伺服器完全跳過快取，解決設備同步延遲
+      const response = await fetch(`${url}?t=${Date.now()}_${Math.random()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
       const data = await response.json();
       
-      // 只有當資料確實存在且完整時才更新，防止跳 0 分
       if (data && Array.isArray(data) && data.length > 0) {
         setScores(data);
       }
@@ -129,14 +135,14 @@ function App() {
       <div className="main-bg" style={{ backgroundImage: `url(${bgImg})` }}></div>
       <div className="comic-halftone"></div>
 
-      {/* Header */}
-      <header className="fixed-header">
-        <h1 className="title-container text-6xl md:text-9xl text-white font-black tracking-tighter uppercase leading-none">
+      {/* Header - 修正置中佈局 */}
+      <header className="fixed-header w-full left-0 right-0 flex justify-center">
+        <h1 className="title-container w-full max-w-6xl flex flex-col md:flex-row items-center justify-center text-center text-6xl md:text-9xl text-white font-black tracking-tighter uppercase leading-none px-4">
           <img 
             src={logoImg} 
             alt="Logo" 
             style={{ height: '1.4em', width: 'auto' }}
-            className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
+            className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] md:mr-6 mb-4 md:mb-0" 
           />
           <span className="whitespace-nowrap">復興實中 新加坡交流</span>
         </h1>
@@ -230,7 +236,10 @@ function App() {
 }
 
 function ScoreboardView({ scores, loading }) {
-  const top4 = [...scores].sort((a, b) => b.score - a.score).slice(0, 4);
+  const top4 = [...scores]
+    .filter(t => (t.score || 0) > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4);
 
   return (
     <div className="w-full flex flex-col items-center">
