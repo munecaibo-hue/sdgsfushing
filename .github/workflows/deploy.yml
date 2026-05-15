@@ -29,7 +29,7 @@ jobs:
           npm install
 
       - name: Build
-        run: ./node_modules/.bin/vite build --base=/sdgsfushing/
+        run: node node_modules/vite/bin/vite.js build --base=/sdgsfushing/
         env:
           VITE_GOOGLE_APP_SCRIPT_URL: ${{ secrets.VITE_GOOGLE_APP_SCRIPT_URL }}
 
