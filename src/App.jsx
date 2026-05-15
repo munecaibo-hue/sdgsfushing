@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Trophy, Shield, RotateCcw, Plus, LogOut } from 'lucide-react'
+import bgImg from '../public/bg.png.png'
+import logoImg from '../public/logo.png.png'
 
 // Constants
 const CLASSES = [
@@ -122,14 +124,14 @@ function App() {
 
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-start py-10 px-4 w-full overflow-x-hidden">
-      <div className="main-bg"></div>
+      <div className="main-bg" style={{ backgroundImage: `url(${bgImg})` }}></div>
       <div className="comic-halftone"></div>
 
       {/* Header */}
       <header className="fixed-header">
         <h1 className="title-container text-6xl md:text-9xl text-white font-black tracking-tighter uppercase leading-none">
           <img 
-            src={`${import.meta.env.BASE_URL}logo.png.png`} 
+            src={logoImg} 
             alt="Logo" 
             style={{ height: '1.4em', width: 'auto' }}
             className="drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
